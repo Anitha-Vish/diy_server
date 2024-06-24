@@ -1,25 +1,37 @@
 import express from "express";
 import cors from 'cors';
+import bodyParser from 'body-parser';
+import projectRoutes from './routes/projectRoutes.js';
 import connectDB from './db/db-connection.js';
 import userRouter from "./routes/userRoute.js";
+
+
+
 
 // PORT & express
 const port = process.env.PORT || 8000;
 const app = express();
 
-//JSON & CORS
+
+//JSON  & Middleware
 app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json());
 
 // Database connection
 connectDB();
+
+
+app.use("/users", userRouter)
+
+app.use('/projects', projectRoutes);
+
 
 // Default route
 app.get('/', (req, res) => {
   res.send('Welcome to Server');
 });
 
-app.use("/users", userRouter)
 
 
 
