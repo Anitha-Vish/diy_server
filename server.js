@@ -1,5 +1,5 @@
 import express from "express";
-// import cors from 'cors';
+import cors from 'cors';
 import connectDB from './db/db-connection.js';
 import userRouter from "./routes/userRoute.js";
 
@@ -8,7 +8,7 @@ const port = process.env.PORT || 8000;
 const app = express();
 
 //JSON & CORS
-//app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // Database connection
