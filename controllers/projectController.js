@@ -3,10 +3,11 @@ import Project from '../models/projectModel.js';
 // Controller to create a new project
 export const createProject = async (req, res) => {
   try {
-    const { title, description, materials, steps } = req.body;
+    const { title, description,coverImage, materials, steps } = req.body;
     const project = new Project({
       title,
       description,
+      coverImage,
       materials,
       steps
     });
