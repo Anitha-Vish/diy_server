@@ -12,8 +12,10 @@ const ProjectSchema = new mongoose.Schema({
   description: { type: String, required: true },
   coverImage: { type: String, default: '' },
   materials: { type: String, default: '' },
+  category: { type: String, required: true},
   steps: [stepSchema],
   createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
 });
 
 

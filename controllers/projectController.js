@@ -24,32 +24,33 @@ export const getProjectById = async (req, res) => {
   }
 };
 
+
 export const createProject = async (req, res) => {
   try {
-    const { title, description, materials } = req.body;
+    const { title, description, materials, category } = req.body;
     let steps = req.body.steps;
-    let coverImageUrl = '';
+    let coverImageUrl = "";
 
-    console.log('Request Body:', req.body);
-    console.log('Request Files:', req.files);
+    if (!title || !description || !materials || !category) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
 
     if (req.files && req.files.length > 0) {
-      const coverImageFile = req.files.find(file => file.fieldname === 'coverImage');
+      const coverImageFile = req.files.find((file) => file.fieldname === "coverImage");
       if (coverImageFile) {
         const result = await cloudinary.uploader.upload(coverImageFile.path);
         coverImageUrl = result.secure_url;
-        console.log('Cover Image URL:', coverImageUrl);
       }
     }
 
-    if (typeof steps === 'string') {
+    if (typeof steps === "string") {
       steps = JSON.parse(steps);
     }
 
     const projectSteps = steps.map((step, index) => {
       const stepImages = req.files
-        .filter(file => file.fieldname.startsWith(`steps[${index}][images]`))
-        .map(file => file.path);
+        .filter((file) => file.fieldname.startsWith(`steps[${index}][images]`))
+        .map((file) => file.path);
       return { ...step, images: stepImages };
     });
 
@@ -58,6 +59,7 @@ export const createProject = async (req, res) => {
       description,
       coverImage: coverImageUrl,
       materials,
+      category, 
       steps: projectSteps,
     });
 
