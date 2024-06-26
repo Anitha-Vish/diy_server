@@ -1,10 +1,14 @@
-import express from 'express';
-import { createProject } from '../controllers/projectController.js';
-// import { validateProjectData } from '../middlewares/validateProject.js';
+import express from "express";
+import parser from "../db/multerConfig.js";
+import { getProjects, getProjectById, createProject } from "../controllers/projectController.js";
+
 
 const router = express.Router();
 
-// Route to handle creating a new project
-router.post('/', createProject);
+router.get("/", getProjects);
+router.get("/:projectId", getProjectById);
+
+router.post("/create-project", parser.any(), createProject);
 
 export default router;
+

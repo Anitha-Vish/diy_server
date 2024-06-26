@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from "express";
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -5,7 +6,7 @@ import projectRoutes from './routes/projectRoutes.js';
 import connectDB from './db/db-connection.js';
 import userRouter from "./routes/userRoute.js";
 
-
+dotenv.config();
 
 
 // PORT & express
@@ -24,7 +25,7 @@ connectDB();
 
 app.use("/users", userRouter)
 
-app.use('/projects', projectRoutes);
+app.use('/api/projects', projectRoutes);
 
 
 // Default route
