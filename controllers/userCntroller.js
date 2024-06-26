@@ -25,7 +25,7 @@ export const getUser = async ( req, res) => {
 
 export const updateUser = async (req,res) => {
     const {id} = req.params;
-    const { firstName, lastName, email, password } = req.body
+    const {username,  firstName, lastName, email, password } = req.body
 
     try {
         // HASH PASSWORD
