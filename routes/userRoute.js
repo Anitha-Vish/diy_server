@@ -12,7 +12,7 @@ userRouter.get("/:id", getUser)
 userRouter.put("/update/:id", updateUser)
 userRouter.delete("/delete/:id", deleteUser)
 
-userRouter.post("/signup", signupUser)
+userRouter.post("/register", signupUser)
 userRouter.post("/login", loginUser )
 userRouter.get("/admin", verifyUser, (req,res) => res.send("Hello Royce: route is Protected !"))
 
