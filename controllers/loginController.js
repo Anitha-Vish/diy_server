@@ -9,10 +9,10 @@ const loginUser = async function ( req,res) {
 
     try{
         const user = await User.login(username, password )
-            // console.log(user)
+            console.log(user)
             // res.json(user)
         const token = createToken(user._id)
-        res.json({token}); 
+        res.json({token, user});  // option added  : {firstName: user.firstName, lastName: user.lastName, username: user.username}
     } catch (error) {
         res.status(400).json({ error: error.message})
     }
