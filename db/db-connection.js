@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 
 
-// Load environment variables from .env file
-
 
 const connectDB = async () => {
   try {
@@ -15,7 +13,7 @@ const connectDB = async () => {
   } catch (error) {
     // console.log('Connection error:',error.message);
 	    console.error(error);
-        process.exit();
+     process.exit();
   }
 };
 
