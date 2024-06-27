@@ -15,6 +15,8 @@ const userSchema = new Schema ({
 
   lastName:{type: String, required: [true, "please provide a lastName"], },
 
+  about:{type: String, default: "" },
+
   email: { type: String, required: true,  unique: true,
       
     validate: { 
