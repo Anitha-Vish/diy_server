@@ -9,6 +9,8 @@ const userSchema = new Schema ({
 
   username: { type: String, required: [true, "please provide a username"], unique: true, },
 
+  userImage: { type: String, default: ""},   // added field for cover image
+
   firstName: { type: String, required: [true, "please provide a Name"], },
 
   lastName:{type: String, required: [true, "please provide a lastName"], },

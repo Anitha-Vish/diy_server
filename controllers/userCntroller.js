@@ -1,4 +1,5 @@
 import User from "../models/userModel.js"
+import cloudinary from "../db/cloudinaryConfig.js";
 import bcrypt from "bcrypt"
 
 
@@ -25,7 +26,7 @@ export const getUser = async ( req, res) => {
 
 export const updateUser = async (req,res) => {
     const {id} = req.params;
-    const {username,  firstName, lastName, email, password } = req.body
+    const {username, userImage, firstName, lastName, email, password } = req.body   // added userImage
 
     try {
         // HASH PASSWORD
