@@ -1,7 +1,6 @@
 import Project from "../models/projectModel.js";
 import cloudinary from "../db/cloudinaryConfig.js";
 
-
 export const getProjects = async (req, res) => {
   try {
     const projects = await Project.find();
@@ -23,7 +22,6 @@ export const getProjectById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 export const createProject = async (req, res) => {
   try {
@@ -68,5 +66,22 @@ export const createProject = async (req, res) => {
   } catch (error) {
     console.error("Error creating project:", error);
     res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
+export const updateProject = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const updatedData = req.body;
+
+    const updatedProject = await Project.findByIdAndUpdate(projectId, updatedData, { new: true });
+
+    if (!updatedProject) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.status(200).json(updatedProject);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
