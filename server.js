@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import projectRoutes from './routes/projectRoutes.js';
 import connectDB from './db/db-connection.js';
 import userRouter from "./routes/userRoute.js";
+//import commentRouter from './routes/commentRoutes.js';
 
 dotenv.config();
 
@@ -25,8 +26,9 @@ connectDB();
 
 app.use("/users", userRouter)
 
-app.use('/api/projects', projectRoutes);
+//app.use("/comments", commentRouter )
 
+app.use('/api/projects', projectRoutes);
 
 // Default route
 app.get('/', (req, res) => {
