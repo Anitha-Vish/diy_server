@@ -1,5 +1,9 @@
 import User from "../models/userModel.js"
+import cloudinary from "../db/cloudinaryConfig.js";
 import bcrypt from "bcrypt"
+
+
+
 
 
 export const getAllUsers =  async (req, res) => {
@@ -25,7 +29,7 @@ export const getUser = async ( req, res) => {
 
 export const updateUser = async (req,res) => {
     const {id} = req.params;
-    const {username,  firstName, lastName, email, password } = req.body
+    const {username, userImage, firstName, lastName, about, email, password } = req.body   // added userImage
 
     try {
         // HASH PASSWORD
@@ -33,6 +37,15 @@ export const updateUser = async (req,res) => {
                 const salt = await bcrypt.genSalt(10);
                 req.body.password = await bcrypt.hash(password, salt)
             }
+        // Upload User Image
+        if (req.files && req.files.length > 0) {
+            const userImageFile = req.files.find((file) => file.fieldname === "userImage");
+            if (userImageFile) {
+              const result = await cloudinary.uploader.upload(userImageFile.path);
+              req.body.userImage = result.secure_url;
+            }
+          }
+
         // UPDATE USER FIELD
         const updateUser = await User.findByIdAndUpdate(
             id, 
