@@ -1,7 +1,6 @@
 import Project from "../models/projectModel.js";
 import cloudinary from "../db/cloudinaryConfig.js";
 
-
 export const getProjects = async (req, res) => {
   try {
     const projects = await Project.find();
@@ -24,15 +23,14 @@ export const getProjectById = async (req, res) => {
   }
 };
 
-
 export const createProject = async (req, res) => {
   try {
-    const { title, description, materials, category } = req.body;
+    const { title, description, materials, category, username } = req.body;
     let steps = req.body.steps;
     let coverImageUrl = "";
 
-    if (!title || !description || !materials || !category) {
-      return res.status(400).json({ message: "All fields are required" });
+    if (!title || !description || !materials || !category || !username) {
+      return res.status(400).json({ message: "All fields are required, including username" });
     }
 
     if (req.files && req.files.length > 0) {
@@ -59,7 +57,8 @@ export const createProject = async (req, res) => {
       description,
       coverImage: coverImageUrl,
       materials,
-      category, 
+      category,
+      username,
       steps: projectSteps,
     });
 
@@ -68,5 +67,22 @@ export const createProject = async (req, res) => {
   } catch (error) {
     console.error("Error creating project:", error);
     res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
+export const updateProject = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const updatedData = req.body;
+
+    const updatedProject = await Project.findByIdAndUpdate(projectId, updatedData, { new: true });
+
+    if (!updatedProject) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.status(200).json(updatedProject);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
