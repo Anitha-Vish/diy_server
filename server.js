@@ -2,10 +2,13 @@ import dotenv from 'dotenv';
 import express from "express";
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import Discussion from './models/discussionModel.js';
 import projectRoutes from './routes/projectRoutes.js';
 import connectDB from './db/db-connection.js';
 import userRouter from "./routes/userRoute.js";
-//import commentRouter from './routes/commentRoutes.js';
+import discussionRoutes from './routes/discussionRoutes.js';
+
 
 dotenv.config();
 
@@ -29,6 +32,7 @@ app.use("/users", userRouter)
 //app.use("/comments", commentRouter )
 
 app.use('/api/projects', projectRoutes);
+app.use('/discussions', discussionRoutes);
 
 // Default route
 app.get('/', (req, res) => {
