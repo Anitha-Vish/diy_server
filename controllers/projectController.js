@@ -25,12 +25,12 @@ export const getProjectById = async (req, res) => {
 
 export const createProject = async (req, res) => {
   try {
-    const { title, description, materials, category } = req.body;
+    const { title, description, materials, category, username } = req.body;
     let steps = req.body.steps;
     let coverImageUrl = "";
 
-    if (!title || !description || !materials || !category) {
-      return res.status(400).json({ message: "All fields are required" });
+    if (!title || !description || !materials || !category || !username) {
+      return res.status(400).json({ message: "All fields are required, including username" });
     }
 
     if (req.files && req.files.length > 0) {
@@ -57,7 +57,8 @@ export const createProject = async (req, res) => {
       description,
       coverImage: coverImageUrl,
       materials,
-      category, 
+      category,
+      username,
       steps: projectSteps,
     });
 
