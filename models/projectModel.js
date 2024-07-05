@@ -15,7 +15,8 @@ const ProjectSchema = new mongoose.Schema({
   steps: [stepSchema],
   username: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  updatedAt: { type: Date, default: Date.now },
+  views: { type: Number, default: 0 } // Added for views
 });
 
 

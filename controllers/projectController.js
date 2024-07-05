@@ -13,7 +13,11 @@ export const getProjects = async (req, res) => {
 export const getProjectById = async (req, res) => {
   try {
     const { projectId } = req.params;
-    const project = await Project.findById(projectId);
+   // const project = await Project.findById(projectId);
+    const project = await Project.findByIdAndUpdate(projectId,   // updated code views increment
+      { $inc:{views: 1} },
+      { new: true }
+    );
     if (!project) {
       return res.status(404).json({ message: "Project not found" });
     }
@@ -22,6 +26,17 @@ export const getProjectById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// ADDED CONTROLLER FOR POPULAR PROJECTS
+export const getMostPopularProjects = async (req,res) => {
+  try{ 
+    const popularProjects = await Project.find().sort({views: -1}).limit(3)
+    res.status(200).json(popularProjects); 
+    console.log(popularProjects)
+  }catch(error){
+    res.status(500).json({ message: error.message})
+  }
+}
 
 export const createProject = async (req, res) => {
   try {
